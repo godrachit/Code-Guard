@@ -1,0 +1,5 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Admin login')}"></head>
+<body class="center"><form class="card" method="post" th:action="@{/admin/login}"><h2>🛡 CodeGuard</h2>
+<p class="warn" th:if="${param.error}">Invalid username or password</p>
+<input name="username" placeholder="Username" required autofocus><input name="password" type="password" placeholder="Password" required><button>Sign in</button></form></body></html>

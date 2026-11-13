@@ -1,0 +1,8 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Registered')}"></head>
+<body><main><div class="card"><h2>Registration confirmed ✔</h2>
+<table><tr><th>Name</th><td th:text="${c.name}"></td></tr><tr><th>Candidate ID</th><td th:text="${c.candidateId}"></td></tr>
+<tr><th>Session ID</th><td th:text="${c.sessionId}"></td></tr><tr><th>Registered at</th><td th:text="${#temporals.format(c.registeredAt,'dd MMM yyyy HH:mm:ss')}"></td></tr>
+<tr><th>Test</th><td th:text="${c.exam.title}"></td></tr></table>
+<p class="muted">Keep this page's address: it is your personal link to the exam and lets you resume if your browser closes.</p>
+<a class="btn" th:href="@{/session/{s}/exam(s=${c.sessionId})}">Continue to instructions</a></div></main></body></html>

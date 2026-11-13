@@ -1,0 +1,16 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Dashboard')}"></head>
+<body><div th:replace="~{fragments :: nav}"></div><main>
+<div id="alert" class="banner hidden"></div>
+<div class="stats">
+<div class="card stat"><b th:text="${examCount}">0</b>Tests</div>
+<div class="card stat"><b th:text="${candidateCount}">0</b>Registered candidates</div>
+<div class="card stat"><b th:text="${active}">0</b>Active exams</div>
+<div class="card stat"><b th:text="${completed}">0</b>Completed</div>
+<div class="card stat"><b th:text="${online}">0</b>Online now</div>
+<div class="card stat"><b th:text="${violationCount}">0</b>Violations</div></div>
+<div class="card"><h3>Tests</h3><table><tr><th>Title</th><th>Questions</th><th>Link</th><th></th></tr>
+<tr th:each="e : ${exams}"><td th:text="${e.title}"></td><td th:text="${e.questions.size()}"></td><td th:text="${e.linkActive} ? 'active' : 'disabled'"></td><td><a th:href="@{/admin/exams/{id}(id=${e.id})}">Manage</a></td></tr></table></div>
+<div class="card"><h3>Recent violations</h3><table><tr><th>Time</th><th>Candidate</th><th>Type</th><th>Severity</th></tr>
+<tr th:each="v : ${recent}"><td th:text="${#temporals.format(v.occurredAt,'dd MMM HH:mm:ss')}"></td><td th:text="${v.candidate.name}"></td><td th:text="${v.type}"></td><td><span class="tag" th:classappend="${v.severity}" th:text="${v.severity}"></span></td></tr></table></div>
+</main><script th:src="@{/js/monitor.js}"></script></body></html>

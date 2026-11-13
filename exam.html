@@ -1,0 +1,21 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Exam')}"></head>
+<body th:attr="data-sid=${c.sessionId},data-status=${c.status}"><main>
+<div id="gate" class="card"><h2 th:text="${exam.title}"></h2><p class="muted" th:text="${exam.description}"></p>
+<p>Duration: <b th:text="${exam.durationMinutes} + ' minutes'"></b>. The timer starts when you press the button below.</p>
+<ul><li>You must share your <b>entire screen</b>. Recording starts only after you allow it, and a red REC indicator stays visible during the exam.</li>
+<li>Tab switches, focus loss, leaving fullscreen, copy/cut/paste and stopping screen sharing are logged and shown to the examiner for human review.</li>
+<li>Write your solution as a Java class named <code>Main</code>, reading stdin and writing stdout. Do not reload or close this page; your code autosaves.</li></ul>
+<p id="gateMsg" class="warn"></p><button id="start">Share entire screen &amp; start</button></div>
+<div id="app" class="hidden">
+<div class="card examhead"><b th:text="${exam.title}"></b><span class="rec">● REC</span><span>Time left: <b id="timer">--:--</b></span><button id="submit">Submit exam</button></div>
+<div id="fsbar" class="banner hidden">Fullscreen is required. <button id="fsbtn">Return to fullscreen</button></div>
+<div class="card"><button class="qtab" th:each="q, st : ${exam.questions}" th:classappend="${st.index == 0} ? 'active'" th:attr="data-q=${q.id}" th:text="'Q' + ${st.count}"></button></div>
+<div class="card qpanel" th:each="q, st : ${exam.questions}" th:id="'q-' + ${q.id}" th:classappend="${st.index > 0} ? 'hidden'">
+<h3 th:text="${q.title} + ' (' + ${q.marks} + ' marks · ' + ${q.difficulty} + ')'"></h3>
+<pre th:text="${q.statement}"></pre>
+<div class="grid2"><div><b>Sample input</b><pre th:text="${q.sampleInput}"></pre></div><div><b>Sample output</b><pre th:text="${q.sampleOutput}"></pre></div></div>
+<textarea class="code" spellcheck="false" th:attr="data-q=${q.id}" th:text="${saved[q.id] ?: template}"></textarea>
+<button class="run" th:attr="data-q=${q.id}">▶ Run on sample</button>
+<pre th:id="'out-' + ${q.id}"></pre></div></div>
+</main><script th:src="@{/js/bridge.js}" defer></script></body></html>

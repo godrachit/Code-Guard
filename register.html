@@ -1,0 +1,21 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Register')}"></head>
+<body><main>
+<form id="regForm" class="card" method="post" th:action="@{/test/{t}/register(t=${exam.token})}">
+<h2 th:text="${exam.title}"></h2><p class="muted" th:text="${exam.description}"></p>
+<div class="banner" th:if="${errors}"><ul><li th:each="e : ${errors}" th:text="${e}"></li></ul></div>
+<div class="grid2">
+<label>Full name<input name="name" required maxlength="120" th:value="${form.name}"></label>
+<label>College / University<input name="college" required maxlength="160" th:value="${form.college}"></label>
+<label>College roll number<input name="rollNo" required maxlength="40" th:value="${form.rollNo}"></label>
+<label>University registration number<input name="regNo" required maxlength="40" th:value="${form.regNo}"></label>
+<label>Email<input name="email" type="email" required th:value="${form.email}"></label>
+<label>Mobile<input name="mobile" required th:value="${form.mobile}"></label>
+<label>Course (BCA, B.Tech, MCA…)<input name="course" required maxlength="40" th:value="${form.course}"></label>
+<label>Branch / Department<input name="branch" required maxlength="80" th:value="${form.branch}"></label>
+<label>Semester / Year<input name="semester" required maxlength="20" th:value="${form.semester}"></label></div>
+<input type="hidden" name="screenRes"><input type="hidden" name="language"><input type="hidden" name="timezone">
+<div class="banner"><b>What we collect:</b> the details above; your public IP address, browser, operating system, device type, screen resolution, language and time zone; and, during the exam, a recording of the screen you choose to share plus tab-switch, focus, fullscreen and copy/paste events. We do not collect MAC addresses or hardware serial numbers. Flagged events are reviewed by a person.</div>
+<label><input type="checkbox" name="consent" value="yes" required> I understand and consent</label>
+<button>Register</button></form></main>
+<script th:src="@{/js/bridge.js}" defer></script></body></html>

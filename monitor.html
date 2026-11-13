@@ -1,0 +1,14 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Live monitor')}"></head>
+<body><div th:replace="~{fragments :: nav}"></div><main>
+<div id="alert" class="banner hidden"></div>
+<div class="row card"><a class="btn" th:each="f : ${ {'all','active','completed','violations','disconnected'} }" th:href="@{/admin/monitor(filter=${f})}" th:text="${f}"></a></div>
+<div class="card"><table><tr><th>Name</th><th>College</th><th>Roll</th><th>ID</th><th>IP</th><th>OS / Browser</th><th>Started</th><th>Left</th><th>Screen</th><th>Rec</th><th>Viol.</th><th>Status</th><th></th></tr>
+<tr th:each="c : ${list}"><td th:text="${c.name}"></td><td th:text="${c.college}"></td><td th:text="${c.rollNo}"></td><td th:text="${c.candidateId}"></td><td th:text="${c.ip}"></td>
+<td th:text="${c.os} + ' / ' + ${c.browser}"></td>
+<td th:text="${c.startedAt != null} ? ${#temporals.format(c.startedAt,'HH:mm:ss')} : '-'"></td>
+<td th:text="${c.status == 'IN_PROGRESS'} ? (${c.remainingSeconds() / 60} + ' min') : '-'"></td>
+<td th:text="${c.screenSharing} ? 'sharing' : 'no'"></td><td th:text="${c.recording} ? 'recording' : 'no'"></td><td th:text="${c.violationCount}"></td>
+<td><span class="tag" th:with="s=${c.status == 'IN_PROGRESS'} ? (${c.online} ? 'ONLINE' : 'DISCONNECTED') : ${c.status}" th:classappend="${s}" th:text="${s}"></span></td>
+<td><a th:href="@{/admin/candidates/{id}(id=${c.id})}">Report</a></td></tr></table></div>
+</main><script th:src="@{/js/monitor.js}"></script></body></html>

@@ -1,0 +1,9 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('New test')}"></head>
+<body><div th:replace="~{fragments :: nav}"></div><main>
+<form class="card" method="post" th:action="@{/admin/exams}"><h3>Create test</h3>
+<label>Title<input name="title" required maxlength="200"></label>
+<label>Description / instructions<textarea name="description" rows="4"></textarea></label>
+<label>Duration (minutes)<input name="durationMinutes" type="number" min="5" max="300" value="60" required></label>
+<label>Link expires at (optional)<input name="expiresAt" type="datetime-local"></label>
+<button>Create &amp; generate link</button></form></main></body></html>

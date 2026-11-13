@@ -1,0 +1,4 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org"><body>
+<head th:fragment="head(t)"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title th:text="${t} + ' · CodeGuard'">CodeGuard</title><link rel="stylesheet" th:href="@{/css/app.css}"></head>
+<nav th:fragment="nav" class="nav"><b>🛡 CodeGuard</b><a th:href="@{/admin}">Dashboard</a><a th:href="@{/admin/monitor}">Live monitor</a><a th:href="@{/admin/exams/new}">New test</a><form th:action="@{/admin/logout}" method="post"><button class="link">Logout</button></form></nav>
+</body></html>

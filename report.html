@@ -1,0 +1,21 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Report')}"></head>
+<body><div th:replace="~{fragments :: nav}"></div><main>
+<div class="card"><h2 th:text="${c.name} + ' · ' + ${c.candidateId}"></h2>
+<div class="grid2"><table>
+<tr><th>College</th><td th:text="${c.college}"></td></tr><tr><th>Roll / Reg no.</th><td th:text="${c.rollNo} + ' / ' + ${c.regNo}"></td></tr>
+<tr><th>Email / Mobile</th><td th:text="${c.email} + ' / ' + ${c.mobile}"></td></tr><tr><th>Course</th><td th:text="${c.course} + ', ' + ${c.branch} + ', ' + ${c.semester}"></td></tr>
+<tr><th>Test</th><td th:text="${c.exam.title}"></td></tr><tr><th>Status</th><td th:text="${c.status}"></td></tr>
+<tr><th>Marks</th><td><b th:text="${total} + ' / ' + ${maxMarks}"></b></td></tr></table>
+<table><tr><th>IP (server-side)</th><td th:text="${c.ip}"></td></tr><tr><th>Browser / OS / Device</th><td th:text="${c.browser} + ' / ' + ${c.os} + ' / ' + ${c.deviceType}"></td></tr>
+<tr><th>Screen / Language / TZ</th><td th:text="${c.screenRes} + ' / ' + ${c.language} + ' / ' + ${c.timezone}"></td></tr>
+<tr><th>Registered</th><td th:text="${#temporals.format(c.registeredAt,'dd MMM yyyy HH:mm:ss')}"></td></tr>
+<tr><th>Started</th><td th:text="${c.startedAt != null} ? ${#temporals.format(c.startedAt,'dd MMM yyyy HH:mm:ss')} : '-'"></td></tr>
+<tr><th>Submitted</th><td th:text="${c.submittedAt != null} ? ${#temporals.format(c.submittedAt,'dd MMM yyyy HH:mm:ss')} : '-'"></td></tr></table></div>
+<p class="muted">An IP address is not proof of identity, and flagged events are signals for human review, not proof of misconduct.</p></div>
+<div class="card"><h3>Violations</h3><table><tr><th>Time</th><th>Type</th><th>Severity</th><th>Description</th></tr>
+<tr th:each="v : ${vs}"><td th:text="${#temporals.format(v.occurredAt,'HH:mm:ss')}"></td><td th:text="${v.type}"></td><td><span class="tag" th:classappend="${v.severity}" th:text="${v.severity}"></span></td><td th:text="${v.description}"></td></tr></table></div>
+<div class="card"><h3>Submissions</h3><div th:each="s : ${subs}"><h4 th:text="${s.question.title} + ' — ' + ${s.marks} + '/' + ${s.question.marks} + (${s.passed} ? ' ✔' : ' ✘')"></h4><pre th:text="${s.code}"></pre></div></div>
+<div class="card"><h3>Screen recordings</h3><p class="muted" th:if="${parts.isEmpty()}">No recording uploaded.</p>
+<video controls preload="none" th:each="p : ${parts}" th:src="@{/admin/recordings/{sid}/{p}(sid=${c.sessionId},p=${p})}"></video></div>
+</main></body></html>
